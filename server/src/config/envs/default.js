@@ -25,14 +25,23 @@ const config = {
 
   // JWT settings (handle different variable names between env files)
   jwtSecret: process.env.JWT_SECRET_KEY,
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN || "1d",
-
+  jwtAccessTokenExpiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN || "30m",
+  jwtRefreshTokenExpiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRES_IN || "7d",
   // Password encryption rounds (handle different variable names)
   bcryptSaltRounds: parseInt(process.env.BCRYPT_SALT_ROUND) || 1,
 
   // URLs for frontend and backend
   frontendUrl: process.env.FRONTEND_URL,
   backendUrl: process.env.BACKEND_URL,
+
+  //   Nodemailer
+  emailUser: process.env.EMAIL_USER,
+  emailPass: process.env.EMAIL_PASS,
+  emailHost: process.env.EMAIL_HOST,
+  emailPort: parseInt(process.env.EMAIL_PORT) || 587,
+  emailService: process.env.EMAIL_SERVICE || "Gmail",
+  emailSecure: process.env.EMAIL_SECURE === "true" || false,
+  emailFrom: process.env.EMAIL_FROM || "noreply@shadowboard.com",
 };
 
 // Simple log to show which environment is loaded
