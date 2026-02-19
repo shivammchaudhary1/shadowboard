@@ -1,0 +1,20 @@
+{
+  "name": "shadow-board-backend",
+  "version": "1.0.0",
+  "description": "User can vote anonymously",
+  "license": "ISC",
+  "author": "Shivamm Chaudhary",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.2.1",
+    "nodemon": "^1.0.2"
+  }
+}
