@@ -1,0 +1,189 @@
+/* Home.css - Simple styling for notification demo */
+
+.home-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+.home-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.home-header h1 {
+  font-size: 2.5rem;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.home-header p {
+  font-size: 1.2rem;
+  color: #6b7280;
+}
+
+.demo-section {
+  background: #f9fafb;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 1px solid #e5e7eb;
+}
+
+.demo-section h2 {
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.demo-section p {
+  color: #6b7280;
+  margin-bottom: 25px;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+/* Base button styles */
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  border: 2px solid transparent;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Button variants */
+.btn-success {
+  background: #10b981;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #059669;
+}
+
+.btn-error {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-error:hover {
+  background: #dc2626;
+}
+
+.btn-info {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-info:hover {
+  background: #2563eb;
+}
+
+.btn-warning {
+  background: #f59e0b;
+  color: white;
+}
+
+.btn-warning:hover {
+  background: #d97706;
+}
+
+.btn-loading {
+  background: #8b5cf6;
+  color: white;
+}
+
+.btn-loading:hover {
+  background: #7c3aed;
+}
+
+.btn-custom {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-custom:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+/* Voting section */
+.voting-section {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.voting-section h3 {
+  color: #1f2937;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.poll-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.poll-option {
+  padding: 15px 20px;
+  background: #f3f4f6;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  color: #374151;
+}
+
+.poll-option:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.poll-option:active {
+  transform: scale(0.98);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .home-container {
+    padding: 15px;
+  }
+
+  .button-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .poll-options {
+    grid-template-columns: 1fr;
+  }
+
+  .home-header h1 {
+    font-size: 2rem;
+  }
+}
