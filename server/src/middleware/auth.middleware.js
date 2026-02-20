@@ -1,4 +1,4 @@
-import { verifyAccessToken } from "../config/libraries/jwt";
+import { verifyAccessToken } from "../config/libraries/jwt.js";
 
 const extractTokenFromHeader = (authHeader) => {
   if (!authHeader || !authHeader.startsWith("Bearer ")) {

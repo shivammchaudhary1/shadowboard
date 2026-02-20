@@ -17,15 +17,6 @@ export const loginRateLimiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   skipSuccessfulRequests: true, // Don't count successful requests
   skipFailedRequests: false, // Count failed requests
-  keyGenerator: (req) => {
-    // Use IP address as the key for rate limiting
-    const ip =
-      req.ip ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      "unknown";
-    return ip;
-  },
   handler: (req, res) => {
     const resetTime = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes from now
     console.log(
@@ -59,14 +50,6 @@ export const passwordResetRateLimiter = rateLimit({
   legacyHeaders: false,
   skipSuccessfulRequests: true,
   skipFailedRequests: false,
-  keyGenerator: (req) => {
-    const ip =
-      req.ip ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      "unknown";
-    return ip;
-  },
   handler: (req, res) => {
     const resetTime = new Date(Date.now() + 60 * 60 * 1000); // 1 hour from now
     console.log(
@@ -100,14 +83,6 @@ export const registerRateLimiter = rateLimit({
   legacyHeaders: false,
   skipSuccessfulRequests: true,
   skipFailedRequests: false,
-  keyGenerator: (req) => {
-    const ip =
-      req.ip ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      "unknown";
-    return ip;
-  },
   handler: (req, res) => {
     const resetTime = new Date(Date.now() + 60 * 60 * 1000); // 1 hour from now
     console.log(
