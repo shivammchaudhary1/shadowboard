@@ -10,6 +10,8 @@ export const extractIpAddress = (req) => {
     // requestIp.getClientIp() handles all the common IP headers and fallbacks
     const clientIp = requestIp.getClientIp(req);
 
+    // console.log("Extracted IP address:", clientIp); // Log the extracted IP address for debugging
+
     // Handle IPv6 mapped IPv4 addresses (::ffff:192.168.1.1 -> 192.168.1.1)
     if (clientIp && clientIp.includes("::ffff:")) {
       return clientIp.replace("::ffff:", "");
