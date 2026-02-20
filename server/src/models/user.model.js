@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema(
     lastLogin: {
       type: Date,
     },
+    userLogs: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "LoginHistory",
+    },
     role: {
       type: String,
       enum: ["user", "admin"],

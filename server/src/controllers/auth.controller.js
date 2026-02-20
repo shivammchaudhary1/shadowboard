@@ -9,6 +9,7 @@ import { sendMail } from "../config/libraries/nodeMailer.js";
 import { verifyEmailTemplate } from "../config/emails/verifyMail.js";
 import { forgotPasswordTemplate } from "../config/emails/forgotPassword.js";
 import config from "../config/envs/default.js";
+import { generateUniqueUsername } from "../utility/uniqueUsername.js";
 
 const registerUser = async (req, res) => {
   try {
@@ -16,6 +17,7 @@ const registerUser = async (req, res) => {
 
     // Check if user already exists
     const existingUser = await UserModel.findOne({ email });
+
     if (existingUser) {
       return res.status(400).json({
         message: "User already exists with this email, please login",
@@ -23,7 +25,8 @@ const registerUser = async (req, res) => {
       });
     }
 
-    const username = email.split("@")[0].toLowerCase(); // Simple username generation from email
+    const baseUsername = email.split("@")[0];
+    const username = await generateUniqueUsername(baseUsername, UserModel);
 
     // Create new user
     const newUser = new UserModel({
@@ -70,11 +73,6 @@ const registerUser = async (req, res) => {
       message:
         "User registered successfully! Please check your email to verify your account.",
       success: true,
-      user: {
-        id: savedUser._id,
-        username: savedUser.username,
-        isVerified: savedUser.isVerified,
-      },
       emailSent: emailResult.success,
     });
   } catch (error) {
@@ -151,6 +149,7 @@ const loginUser = async (req, res) => {
     }
 
     const refreshToken = generateRefreshToken({ id: user._id });
+    const accessToken = generateAccessToken({ id: user._id, role: user.role });
 
     // Update user's last login
     user.lastLogin = new Date();
@@ -169,6 +168,7 @@ const loginUser = async (req, res) => {
       },
       tokens: {
         refreshToken,
+        accessToken,
       },
     });
   } catch (error) {
