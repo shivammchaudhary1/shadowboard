@@ -3,6 +3,7 @@ import cors from "cors";
 import config from "../envs/default.js";
 import compression from "compression";
 import morgan from "morgan";
+import apiRouter from "../../routes/api.routes.js";
 export const configureExpress = () => {
   const app = express();
 
@@ -12,6 +13,9 @@ export const configureExpress = () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(compression());
+
+  // API Routes
+  app.use("/api", apiRouter);
 
   //sample api
   app.get("/", (req, res) => {
