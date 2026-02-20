@@ -25,6 +25,9 @@ const userSchema = new mongoose.Schema(
     verificationToken: {
       type: String,
     },
+    verificationTokenExpires: {
+      type: Date,
+    },
     resetPasswordToken: {
       type: String,
     },
@@ -33,6 +36,10 @@ const userSchema = new mongoose.Schema(
     },
     lastLogin: {
       type: Date,
+    },
+    userLogs: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "LoginHistory",
     },
     role: {
       type: String,

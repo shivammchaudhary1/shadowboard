@@ -17,8 +17,8 @@ export const setupServer = async () => {
     const server = app.listen(config.port, () => {
       console.log(
         chalk.bold.green(
-          `🚀 Server running in ${config.environment.toUpperCase()} mode on port ${config.port}`,
-        ),
+          `🚀 Server running in ${config.environment.toUpperCase()} mode on port ${config.port}`
+        )
       );
       console.log(chalk.bold.cyan(`🌐 Backend URL: ${config.backendUrl}`));
       console.log(chalk.bold.cyan(`🎨 Frontend URL: ${config.frontendUrl}`));
@@ -34,7 +34,7 @@ export const setupServer = async () => {
     // Graceful shutdown
     process.on("SIGTERM", () => {
       console.log(
-        chalk.yellow("🔄 Received SIGTERM, shutting down gracefully..."),
+        chalk.yellow("🔄 Received SIGTERM, shutting down gracefully...")
       );
       server.close(() => {
         console.log(chalk.green("✅ Process terminated"));

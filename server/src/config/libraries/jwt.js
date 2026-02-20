@@ -10,7 +10,6 @@ export const generateAccessToken = (payload, option = {}) => {
     return token;
   } catch (error) {
     console.error("Error creating JWT:", error);
-    throw new Error("Token creation failed");
   }
 };
 
@@ -23,7 +22,6 @@ export const generateRefreshToken = (payload, option = {}) => {
     return token;
   } catch (error) {
     console.error("Error creating JWT:", error);
-    throw new Error("Token creation failed");
   }
 };
 
@@ -33,7 +31,6 @@ export const verifyAccessToken = (token) => {
     return decoded;
   } catch (error) {
     console.error("Error verifying JWT:", error);
-    throw new Error("Token verification failed");
   }
 };
 
@@ -43,6 +40,5 @@ export const verifyRefreshToken = (token) => {
     return decoded;
   } catch (error) {
     console.error("Error verifying JWT:", error);
-    throw new Error("Token verification failed");
   }
 };

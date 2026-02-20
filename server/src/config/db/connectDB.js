@@ -13,10 +13,10 @@ export const connectDB = async () => {
     const connect = await mongoose.connect(config.mongoUri);
 
     console.log(
-      chalk.bold.green(`MongoDB Connected: ${connect.connection.host}`),
+      chalk.bold.green(`MongoDB Connected: ${connect.connection.host}`)
     );
     console.log(
-      chalk.bold.blue(`Environment: ${config.environment.toUpperCase()}`),
+      chalk.bold.blue(`Environment: ${config.environment.toUpperCase()}`)
     );
   } catch (error) {
     console.error(chalk.red(`Error: ${error.message}`));

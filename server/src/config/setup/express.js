@@ -7,6 +7,9 @@ import apiRouter from "../../routes/api.routes.js";
 export const configureExpress = () => {
   const app = express();
 
+  // Trust proxy configuration for proper IP detection behind load balancers/reverse proxies
+  app.set("trust proxy", config.environment === "production" ? 1 : false);
+
   // Middlewares
   app.use(morgan(config.environment === "production" ? "combined" : "dev"));
   app.use(cors());

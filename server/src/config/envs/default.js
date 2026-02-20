@@ -41,7 +41,7 @@ const config = {
   emailPort: parseInt(process.env.EMAIL_PORT) || 587,
   emailService: process.env.EMAIL_SERVICE || "Gmail",
   emailSecure: process.env.EMAIL_SECURE === "true" || false,
-  emailFrom: process.env.EMAIL_FROM || "noreply@shadowboard.com",
+  emailFrom: process.env.EMAIL_FROM || "noreply@shadowboard.com"
 };
 
 // Simple log to show which environment is loaded

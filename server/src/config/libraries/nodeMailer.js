@@ -10,8 +10,8 @@ const createTransporter = () => {
     secure: false, // true for 465, false for other ports
     auth: {
       user: process.env.EMAIL_USER || "your-email@gmail.com", // Add to .env files
-      pass: process.env.EMAIL_PASS || "your-app-password", // Add to .env files
-    },
+      pass: process.env.EMAIL_PASS || "your-app-password" // Add to .env files
+    }
   });
 };
 
@@ -24,12 +24,12 @@ export const sendMail = async (to, subject, message) => {
     const mailOptions = {
       from: {
         name: "Shadow Board",
-        address: config.emailFrom || "noreply@shadowboard.com",
+        address: config.emailFrom || "noreply@shadowboard.com"
       },
       to: to,
       subject: subject,
       html: message, // Supports HTML content
-      text: message.replace(/<[^>]*>/g, ""), // Plain text fallback (removes HTML tags)
+      text: message.replace(/<[^>]*>/g, "") // Plain text fallback (removes HTML tags)
     };
 
     // Send email
@@ -44,7 +44,7 @@ export const sendMail = async (to, subject, message) => {
       success: true,
       messageId: result.messageId,
       to: to,
-      subject: subject,
+      subject: subject
     };
   } catch (error) {
     console.error(`❌ Failed to send email: ${error.message}`);
@@ -53,7 +53,7 @@ export const sendMail = async (to, subject, message) => {
       success: false,
       error: error.message,
       to: to,
-      subject: subject,
+      subject: subject
     };
   }
 };
@@ -108,7 +108,7 @@ export const sendNotificationEmail = async (to, action) => {
 export default {
   sendMail,
   sendWelcomeEmail,
-  sendNotificationEmail,
+  sendNotificationEmail
 };
 
 /* 
