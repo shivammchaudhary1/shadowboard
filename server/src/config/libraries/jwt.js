@@ -1,16 +1,15 @@
-import jwt from 'jsonwebtoken';
-import config from '../envs/default.js';
+import jwt from "jsonwebtoken";
+import config from "../envs/default.js";
 
 export const generateAccessToken = (payload, option = {}) => {
   try {
     const token = jwt.sign(payload, config.jwtSecret, {
       expiresIn: config.jwtAccessTokenExpiresIn,
-      ...option
+      ...option,
     });
     return token;
   } catch (error) {
-    console.error('Error creating JWT:', error);
-    throw new Error('Token creation failed');
+    console.error("Error creating JWT:", error);
   }
 };
 
@@ -18,12 +17,11 @@ export const generateRefreshToken = (payload, option = {}) => {
   try {
     const token = jwt.sign(payload, config.jwtSecret, {
       expiresIn: config.jwtRefreshTokenExpiresIn,
-      ...option
+      ...option,
     });
     return token;
   } catch (error) {
-    console.error('Error creating JWT:', error);
-    throw new Error('Token creation failed');
+    console.error("Error creating JWT:", error);
   }
 };
 
@@ -32,8 +30,7 @@ export const verifyAccessToken = (token) => {
     const decoded = jwt.verify(token, config.jwtSecret);
     return decoded;
   } catch (error) {
-    console.error('Error verifying JWT:', error);
-    throw new Error('Token verification failed');
+    console.error("Error verifying JWT:", error);
   }
 };
 
@@ -42,7 +39,6 @@ export const verifyRefreshToken = (token) => {
     const decoded = jwt.verify(token, config.jwtSecret);
     return decoded;
   } catch (error) {
-    console.error('Error verifying JWT:', error);
-    throw new Error('Token verification failed');
+    console.error("Error verifying JWT:", error);
   }
 };

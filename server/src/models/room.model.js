@@ -1,23 +1,24 @@
-// Sub-schema for individual questions within a room
+import mongoose from "mongoose";
+
 const questionSchema = new mongoose.Schema(
   {
     text: { type: String, required: true },
     options: [
       {
         text: { type: String, required: true },
-        voteCount: { type: Number, default: 0 }
-      }
+        voteCount: { type: Number, default: 0 },
+      },
     ],
     isActive: { type: Boolean, default: false }, // Is this the current live question?
     startTime: Date,
     endTime: Date,
     status: {
       type: String,
-      enum: ['pending', 'voting', 'completed'],
-      default: 'pending'
-    }
+      enum: ["pending", "voting", "completed"],
+      default: "pending",
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const roomSchema = new mongoose.Schema(
@@ -26,24 +27,24 @@ const roomSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      index: true // Crucial for performance
+      index: true, // Crucial for performance
     },
     hostId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
+      ref: "User",
+      required: true,
     },
     // Track who is currently in the room
     participants: [
       {
         userId: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'User',
-          index: true
+          ref: "User",
+          index: true,
         },
         username: String,
-        joinedAt: { type: Date, default: Date.now }
-      }
+        joinedAt: { type: Date, default: Date.now },
+      },
     ],
     // The "History" of questions asked in this specific room
     questions: [questionSchema],
@@ -51,20 +52,20 @@ const roomSchema = new mongoose.Schema(
     // Helper field to quickly find the "Current" live question index
     currentQuestionIndex: {
       type: Number,
-      default: 0
+      default: 0,
     },
 
     roomStatus: {
       type: String,
-      enum: ['open', 'closed'],
-      default: 'open'
-    }
+      enum: ["open", "closed"],
+      default: "open",
+    },
   },
-  { timestamps: true, versionKey: false }
+  { timestamps: true, versionKey: false },
 );
 
 // Indexing for faster lookups during high-concurrency voting
-roomSchema.index({ roomId: 1, 'questions.isActive': 1 });
+roomSchema.index({ roomId: 1, "questions.isActive": 1 });
 
-const Room = mongoose.model('Room', roomSchema);
+const Room = mongoose.model("Room", roomSchema);
 export default Room;

@@ -1,4 +1,4 @@
-export const forgotPasswordTemplate = (resetLink, username = 'User') => `
+export const forgotPasswordTemplate = (resetLink, username = "User") => `
 <!DOCTYPE html>
 <html lang="en">
 <head>

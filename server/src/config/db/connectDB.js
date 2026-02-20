@@ -1,12 +1,12 @@
-import mongoose from 'mongoose';
-import chalk from 'chalk';
-import config from '../envs/default.js';
+import mongoose from "mongoose";
+import chalk from "chalk";
+import config from "../envs/default.js";
 
 export const connectDB = async () => {
   try {
     // Check if MongoDB URI is configured
     if (!config.mongoUri) {
-      throw new Error('MongoDB URI is not configured in environment variables');
+      throw new Error("MongoDB URI is not configured in environment variables");
     }
 
     // Connect to MongoDB using config object
