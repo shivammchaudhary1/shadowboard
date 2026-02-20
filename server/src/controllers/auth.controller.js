@@ -1,13 +1,13 @@
-import UserModel from "../models/user.model.js";
-import { hashPassword, comparePassword } from "../config/libraries/bcrypt.js";
+import UserModel from '../models/user.model.js';
+import { hashPassword, comparePassword } from '../config/libraries/bcrypt.js';
 import {
   generateAccessToken,
-  generateRefreshToken,
-} from "../config/libraries/jwt.js";
-import { sendMail } from "../config/libraries/nodeMailer.js";
-import { verifyEmailTemplate } from "../config/emails/verifyMail.js";
-import { forgotPasswordTemplate } from "../config/emails/forgotPassword.js";
-import config from "../config/envs/default.js";
+  generateRefreshToken
+} from '../config/libraries/jwt.js';
+import { sendMail } from '../config/libraries/nodeMailer.js';
+import { verifyEmailTemplate } from '../config/emails/verifyMail.js';
+import { forgotPasswordTemplate } from '../config/emails/forgotPassword.js';
+import config from '../config/envs/default.js';
 
 const registerUser = async (req, res) => {
   try {
@@ -18,10 +18,10 @@ const registerUser = async (req, res) => {
     if (existingUser) {
       return res
         .status(400)
-        .json({ message: "User already exists", success: false });
+        .json({ message: 'User already exists', success: false });
     }
 
-    const username = email.split("@")[0].toLowerCase(); // Simple username generation from email
+    const username = email.split('@')[0].toLowerCase(); // Simple username generation from email
 
     // Create new user
     const newUser = new UserModel({
@@ -29,7 +29,7 @@ const registerUser = async (req, res) => {
       email,
       password: await hashPassword(password),
       isVerified: false, // Add email verification status
-      verificationToken: null, // Will be set when generating tokens
+      verificationToken: null // Will be set when generating tokens
     });
 
     // Save user to database first to get the _id
@@ -47,8 +47,8 @@ const registerUser = async (req, res) => {
     const verificationLink = `${config.frontendUrl}/verify-email?token=${accessToken}`;
     const emailResult = await sendMail(
       email,
-      "Verify Your Email Address - Shadow Board",
-      verifyEmailTemplate(verificationLink, username),
+      'Verify Your Email Address - Shadow Board',
+      verifyEmailTemplate(verificationLink, username)
     );
 
     // Log email send result
@@ -56,27 +56,27 @@ const registerUser = async (req, res) => {
       console.log(`✅ Verification email sent to: ${email}`);
     } else {
       console.error(
-        `❌ Failed to send verification email: ${emailResult.error}`,
+        `❌ Failed to send verification email: ${emailResult.error}`
       );
     }
 
     // Return success response (don't include sensitive data)
     res.status(201).json({
       message:
-        "User registered successfully! Please check your email to verify your account.",
+        'User registered successfully! Please check your email to verify your account.',
       success: true,
       user: {
         id: savedUser._id,
         username: savedUser.username,
         email: savedUser.email,
-        isVerified: savedUser.isVerified,
+        isVerified: savedUser.isVerified
       },
       
-      emailSent: emailResult.success,
+      emailSent: emailResult.success
     });
   } catch (error) {
-    console.error("Error registering user:", error);
-    res.status(500).json({ message: "Server error", success: false });
+    console.error('Error registering user:', error);
+    res.status(500).json({ message: 'Server error', success: false });
   }
 };
 
@@ -88,8 +88,8 @@ const loginUser = async (req, res) => {
     // Validate input
     if (!email || !password) {
       return res.status(400).json({
-        message: "Email and password are required",
-        success: false,
+        message: 'Email and password are required',
+        success: false
       });
     }
 
@@ -97,8 +97,8 @@ const loginUser = async (req, res) => {
     const user = await UserModel.findOne({ email });
     if (!user) {
       return res.status(401).json({
-        message: "Invalid email or password",
-        success: false,
+        message: 'Invalid email or password',
+        success: false
       });
     }
 
@@ -106,8 +106,8 @@ const loginUser = async (req, res) => {
     const isPasswordCorrect = await comparePassword(password, user.password);
     if (!isPasswordCorrect) {
       return res.status(401).json({
-        message: "Invalid email or password",
-        success: false,
+        message: 'Invalid email or password',
+        success: false
       });
     }
 
@@ -115,9 +115,9 @@ const loginUser = async (req, res) => {
     if (!user.isVerified) {
       return res.status(403).json({
         message:
-          "Please verify your email before logging in. Check your inbox for verification email.",
+          'Please verify your email before logging in. Check your inbox for verification email.',
         success: false,
-        needsEmailVerification: true,
+        needsEmailVerification: true
       });
     }
 
@@ -133,25 +133,25 @@ const loginUser = async (req, res) => {
 
     // Return success response
     res.status(200).json({
-      message: "Login successful",
+      message: 'Login successful',
       success: true,
       user: {
         id: user._id,
         username: user.username,
         email: user.email,
         isVerified: user.isVerified,
-        lastLogin: user.lastLogin,
+        lastLogin: user.lastLogin
       },
       tokens: {
         accessToken,
-        refreshToken,
-      },
+        refreshToken
+      }
     });
   } catch (error) {
-    console.error("Error during login:", error);
+    console.error('Error during login:', error);
     res.status(500).json({
-      message: "Server error during login",
-      success: false,
+      message: 'Server error during login',
+      success: false
     });
   }
 };
@@ -164,8 +164,8 @@ const forgetPassword = async (req, res) => {
     // Validate input
     if (!email) {
       return res.status(400).json({
-        message: "Email is required",
-        success: false,
+        message: 'Email is required',
+        success: false
       });
     }
 
@@ -175,13 +175,13 @@ const forgetPassword = async (req, res) => {
       // For security reasons, don't reveal if email exists or not
       return res.status(200).json({
         message:
-          "If an account with that email exists, a password reset link has been sent.",
-        success: true,
+          'If an account with that email exists, a password reset link has been sent.',
+        success: true
       });
     }
 
     // Generate reset token (valid for 1 hour)
-    const resetToken = generateAccessToken({ id: user._id, type: "reset" });
+    const resetToken = generateAccessToken({ id: user._id, type: 'reset' });
 
     // Save reset token and expiry time
     user.resetPasswordToken = resetToken;
@@ -194,8 +194,8 @@ const forgetPassword = async (req, res) => {
     // Send reset email
     const emailResult = await sendMail(
       email,
-      "Reset Your Password - Shadow Board",
-      forgotPasswordTemplate(resetLink, user.username),
+      'Reset Your Password - Shadow Board',
+      forgotPasswordTemplate(resetLink, user.username)
     );
 
     // Log email result
@@ -207,15 +207,15 @@ const forgetPassword = async (req, res) => {
 
     res.status(200).json({
       message:
-        "If an account with that email exists, a password reset link has been sent. Please check your email.",
+        'If an account with that email exists, a password reset link has been sent. Please check your email.',
       success: true,
-      emailSent: emailResult.success,
+      emailSent: emailResult.success
     });
   } catch (error) {
-    console.error("Error during forget password:", error);
+    console.error('Error during forget password:', error);
     res.status(500).json({
-      message: "Server error during password reset request",
-      success: false,
+      message: 'Server error during password reset request',
+      success: false
     });
   }
 };

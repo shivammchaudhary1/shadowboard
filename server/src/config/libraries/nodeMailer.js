@@ -1,17 +1,17 @@
-import nodemailer from "nodemailer";
-import config from "../envs/default.js";
+import nodemailer from 'nodemailer';
+import config from '../envs/default.js';
 
 // Create nodemailer transporter
 const createTransporter = () => {
   return nodemailer.createTransport({
-    service: "gmail", // You can change this to other services like 'yahoo', 'outlook'
-    host: "smtp.gmail.com",
+    service: 'gmail', // You can change this to other services like 'yahoo', 'outlook'
+    host: 'smtp.gmail.com',
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: process.env.EMAIL_USER || "your-email@gmail.com", // Add to .env files
-      pass: process.env.EMAIL_PASS || "your-app-password", // Add to .env files
-    },
+      user: process.env.EMAIL_USER || 'your-email@gmail.com', // Add to .env files
+      pass: process.env.EMAIL_PASS || 'your-app-password' // Add to .env files
+    }
   });
 };
 
@@ -23,13 +23,13 @@ export const sendMail = async (to, subject, message) => {
     // Email options
     const mailOptions = {
       from: {
-        name: "Shadow Board",
-        address: config.emailFrom || "noreply@shadowboard.com",
+        name: 'Shadow Board',
+        address: config.emailFrom || 'noreply@shadowboard.com'
       },
       to: to,
       subject: subject,
       html: message, // Supports HTML content
-      text: message.replace(/<[^>]*>/g, ""), // Plain text fallback (removes HTML tags)
+      text: message.replace(/<[^>]*>/g, '') // Plain text fallback (removes HTML tags)
     };
 
     // Send email
@@ -44,7 +44,7 @@ export const sendMail = async (to, subject, message) => {
       success: true,
       messageId: result.messageId,
       to: to,
-      subject: subject,
+      subject: subject
     };
   } catch (error) {
     console.error(`❌ Failed to send email: ${error.message}`);
@@ -53,7 +53,7 @@ export const sendMail = async (to, subject, message) => {
       success: false,
       error: error.message,
       to: to,
-      subject: subject,
+      subject: subject
     };
   }
 };
@@ -64,7 +64,7 @@ export const sendMail = async (to, subject, message) => {
  * @param {string} userName - User's name
  */
 export const sendWelcomeEmail = async (to, userName) => {
-  const subject = "Welcome to Shadow Board! 🎯";
+  const subject = 'Welcome to Shadow Board! 🎯';
   const message = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #1f2937; text-align: center;">Welcome to Shadow Board!</h2>
@@ -90,7 +90,7 @@ export const sendWelcomeEmail = async (to, userName) => {
  * @param {string} action - Action description
  */
 export const sendNotificationEmail = async (to, action) => {
-  const subject = "Shadow Board Notification";
+  const subject = 'Shadow Board Notification';
   const message = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #1f2937;">Shadow Board Notification</h2>
@@ -108,7 +108,7 @@ export const sendNotificationEmail = async (to, action) => {
 export default {
   sendMail,
   sendWelcomeEmail,
-  sendNotificationEmail,
+  sendNotificationEmail
 };
 
 /* 
