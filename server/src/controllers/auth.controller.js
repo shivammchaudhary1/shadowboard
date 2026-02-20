@@ -1,4 +1,5 @@
 import UserModel from "../models/user.model.js";
+import LoginHistoryModel from "../models/loginHistory.model.js";
 import { hashPassword, comparePassword } from "../config/libraries/bcrypt.js";
 import {
   generateAccessToken,
@@ -10,6 +11,7 @@ import { verifyEmailTemplate } from "../config/emails/verifyMail.js";
 import { forgotPasswordTemplate } from "../config/emails/forgotPassword.js";
 import config from "../config/envs/default.js";
 import { generateUniqueUsername } from "../utility/uniqueUsername.js";
+import { createLogEntry } from "../config/libraries/ipAddress.js";
 
 const registerUser = async (req, res) => {
   try {
@@ -39,6 +41,17 @@ const registerUser = async (req, res) => {
 
     // Save user to database first to get the _id
     const savedUser = await newUser.save();
+
+    // Create login history record for registration
+    const loginHistory = new LoginHistoryModel({
+      userId: savedUser._id,
+      registerLog: createLogEntry(req),
+      loginLogs: [], // Initialize empty login logs array
+    });
+    const savedLoginHistory = await loginHistory.save();
+
+    // Link login history to user
+    savedUser.userLogs = savedLoginHistory._id;
 
     // Generate access and refresh tokens using the saved user's _id
     const passwordVerificationToken = generateAccessToken({
@@ -154,6 +167,38 @@ const loginUser = async (req, res) => {
     // Update user's last login
     user.lastLogin = new Date();
     await user.save();
+
+    // Update login history with new login entry
+    try {
+      let loginHistory = await LoginHistoryModel.findOne({ userId: user._id });
+
+      if (!loginHistory) {
+        // Create new login history if it doesn't exist (for existing users who don't have history)
+        loginHistory = new LoginHistoryModel({
+          userId: user._id,
+          registerLog: {
+            timestamp: user.createdAt || new Date(),
+            ipAddress: "unknown",
+            userAgent: "unknown",
+          },
+          loginLogs: [createLogEntry(req)],
+        });
+        const savedLoginHistory = await loginHistory.save();
+
+        // Link to user if not already linked
+        if (!user.userLogs) {
+          user.userLogs = savedLoginHistory._id;
+          await user.save();
+        }
+      } else {
+        // Add new login entry to existing history
+        loginHistory.loginLogs.push(createLogEntry(req));
+        await loginHistory.save();
+      }
+    } catch (loginHistoryError) {
+      // Log the error but don't fail the login process
+      console.error("Error updating login history:", loginHistoryError);
+    }
 
     console.log(`✅ User logged in: ${email}`);
 
