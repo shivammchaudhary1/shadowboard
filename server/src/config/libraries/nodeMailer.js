@@ -3,14 +3,14 @@ import config from "../envs/default.js";
 
 // Create nodemailer transporter
 const createTransporter = () => {
-  return nodemailer.createTransporter({
-    service: config.emailService, // You can change this to other services like 'yahoo', 'outlook'
-    host: config.emailHost || "smtp.gmail.com",
-    port: config.emailPort || 587,
-    secure: config.emailSecure || false, // true for 465, false for other ports
+  return nodemailer.createTransport({
+    service: "gmail", // You can change this to other services like 'yahoo', 'outlook'
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
     auth: {
-      user: config.emailUser || "your-email@gmail.com", // Add to .env files
-      pass: config.emailPass || "your-app-password", // Add to .env files
+      user: process.env.EMAIL_USER || "your-email@gmail.com", // Add to .env files
+      pass: process.env.EMAIL_PASS || "your-app-password", // Add to .env files
     },
   });
 };
