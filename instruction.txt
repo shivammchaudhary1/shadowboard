@@ -1,0 +1,118 @@
+I am building a real-time voting game using the MERN stack (MongoDB, Express, React, Node.js).
+Before generating anything, strictly follow these rules:
+
+First, analyze my requirements carefully and restate them briefly for confirmation.
+
+Do NOT assume features that are not explicitly mentioned.
+
+Keep my coding structure modular, scalable, and production-ready.
+
+Avoid hallucinating APIs, libraries, or flows — only use realistic and commonly used MERN patterns.
+
+If something is unclear, mark it as ‘NEEDS CONFIRMATION’ instead of guessing.
+
+Generate tasks sequentially: verify completed tasks → pending tasks → next implementation steps.
+
+Project Context
+
+I want to create a fun voting game system where:
+
+A user becomes a Host and creates a room (6-digit/alphanumeric ID, e.g., NanoID).
+
+Host invites members via room ID (or share link/email).
+
+After joining, host can create polls/questions.
+
+Example: “Most handsome person” → members vote among invited users.
+
+Voting duration: 15–20 seconds (configurable timer).
+
+After timer ends, results automatically appear on UI.
+
+Host can choose:
+
+Anonymous voting OR
+
+Visible usernames
+
+UI must clearly show:
+
+“This is an anonymous game” (if enabled)
+
+“No public records shown” (UX message)
+
+BUT in backend, we still securely track:
+
+IP address
+
+usernames
+
+emails (for security/logging)
+
+All rooms, questions, and votes are stored in DB (MongoDB).
+
+Already Completed (IMPORTANT – Check First)
+
+Basic MERN project setup (frontend + backend folder structure)
+
+Authentication flow (login/signup) – JWT based
+
+Basic UI layout (React + Tailwind)
+
+Socket setup initialized (Socket.io basic connection)
+
+You MUST:
+
+Review these completed items first
+
+Do not regenerate already completed parts
+
+Only create tasks for missing modules
+
+What I Need From You
+
+Create a structured, Cursor-AI-friendly MARKUP document that includes:
+
+Tech Stack Justification (MERN + Socket.io)
+
+System Architecture (High-level)
+
+Frontend Task Breakdown (step-by-step checklist)
+
+Backend Task Breakdown (step-by-step checklist)
+
+Database Schema Planning (Rooms, Users, Votes, Questions)
+
+Real-time Flow (Host → Members → Vote → Result)
+
+Folder Structure (keep scalable and clean)
+
+API Design (only necessary endpoints, no overengineering)
+
+Socket Events Design (room join, vote cast, timer end, result broadcast)
+
+Security Notes (IP logging, abuse prevention, rate limiting)
+
+Output Format Rules (Very Important)
+
+Use structured markup (checklist style)
+
+Separate sections: Frontend / Backend / Database / Realtime
+
+Each task must have:
+
+Objective
+
+Status (Completed / Pending / In Progress)
+
+Subtasks
+
+Keep it production-oriented
+
+No unnecessary explanations
+
+No fictional tools or libraries
+
+Follow step-by-step execution order (dependency based)
+
+End goal: A clean, real-time, scalable voting game architecture that I can directly give to Cursor AI to implement code step-by-step without confusion or hallucinated features.
