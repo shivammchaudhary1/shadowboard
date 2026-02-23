@@ -1,9 +1,10 @@
 import { Toaster } from "react-hot-toast";
 import AppRoutes from "./routes/AppRoutes";
+import ErrorBoundary from "./components/Common/ErrorBoundary";
 
 function App() {
   return (
-    <>
+    <ErrorBoundary>
       <AppRoutes />
       {/* React Hot Toast component for notifications */}
       <Toaster
@@ -55,7 +56,7 @@ function App() {
           },
         }}
       />
-    </>
+    </ErrorBoundary>
   );
 }
 
